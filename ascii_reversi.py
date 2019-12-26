@@ -1,12 +1,10 @@
 # Michael Grewal
-# 100 739 181
-# COMP 1405 D2
 
 ''' DESCRIPTION & RULES:
 This program is a game that consists of 5 levels which are unique gameboards read from files in 
 the 'levels' folder. The gameboard is a 2D list of symbols ['@','&','#','%'] and the goal is to make
 all the symbols on the gameboard the same in the fewest possible moves.
-This player's moves consist of picking a symbol and location on the board. Then, that location and all
+The player's moves consist of picking a symbol and location on the board. Then, that location and all
 contiguous symbols are changed to the player's selected symbol. The player will keep making moves
 until the entire gameboard is all the same symbol.'''
 
@@ -134,10 +132,57 @@ def fill(grid,target,userSymbol,row,col):
             fill(grid,target,userSymbol,row,col-1)
 
 
+def displayPar(level):
+    ''' This function takes a level number as argument and prints the par number of moves
+    it should take to complete.'''
+
+    if level == 1:
+        print("Par: 5")
+
+    elif level == 2:
+        print("Par: 4")
+
+    elif level == 3:
+        print("Par: 5")
+
+    elif level == 4:
+        print("Par: 12")
+
+    elif level == 5:
+        print("Par: 14")
+
+def displayGreeting():
+    ''' This function prints the game rules and prompts the user to begin the game.'''
+
+    #print title and instructions
+    print("\n|  Welcome to ASCII Reversi  |")
+
+    print("\nThis is a game that consists of 5 levels.\
+            \nEach level is a grid of symbols (@,&,#,%).\
+            \nThe goal is to make all the symbols the same, in the fewest possible moves.\
+            \nYour move consists of picking a symbol and location on the gameboard.\
+            \nThen, that location and all contiguous symbols are changed to your chosen symbol.\
+            \nYou will keep making moves until the entire gameboard is all the same symbol.\
+            \nEach level has a par. Can you score under par?")
+
+    #prompt user to begin the game
+    while True:
+        user = input("\nReady to begin? (Y/N) \
+            \n> ")
+        if user.upper() == 'Y':
+            break
+        elif user.upper() == 'N':
+            exit()
+        else:
+            continue
+
+
 
 def main():
     ''' This function orchestrates the core behaviour of the game. It calls all the other functions
     and gets them all communicating together so that the game can be executed properly.'''
+
+    displayGreeting()           #game intro
 
     totalUserMoves = 0          #initialize a counter for total user moves made
 
@@ -147,6 +192,7 @@ def main():
 
         grid = readLevel(i)     #create the gameboard and call it grid
         displayBoard(grid)      #display the gameboard
+        displayPar(i)           #display par moves to finish level
 
         #initialize a list of all valid symbols
         symbols = ['&','@','#','%']
@@ -198,7 +244,9 @@ def main():
     
     #closing print statements
     print("You win! Thanks for playing!")
+    print("Par: 40")
     print(f"Total moves: {totalUserMoves}")
+    
 
     #ask user if they want to play again
     while True:
